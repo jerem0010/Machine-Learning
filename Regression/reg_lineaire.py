@@ -3,23 +3,28 @@ from sklearn.datasets import make_regression
 import matplotlib.pyplot as plt
 
 # Définis une graine (seed) pour la reproductibilité
-np.random.seed(42)
+np.random.seed(5336)
 
-n_iterations = 4000 #on choisis le nombre d'iteration ici 
+n_iterations = 300 #on choisis le nombre d'iteration ici 
+
+
+
+theta = np.zeros((2, 1))  
+
 
 def main():
-    x, y = make_regression(n_samples=100, n_features=1, noise=10)
-    y = y.reshape(100, 1)
+    x, y = make_regression(n_samples=100, n_features=1, noise=10) #on choisi une plage de donnée (100) un seul feature xi et un bruit de fond de 10 (noise)
+    y = y.reshape(100, 1)  #on redimmensionne notre vecteur y avec les valeurs de y 1 colonne
 
 
-    X = np.hstack((x, np.ones((x.shape))))
-    theta = np.zeros((2, 1))  # Initialisation avec des zéros
+    X = np.hstack((x, np.ones((x.shape[0], 1)))) #on place une matrice de one de dimension xshape pour les lignes et 1 pour colonne
+    
 
     # Machine learning, choix des paramètres pour l'algo et obtention d'un theta final (a, b) le plus "optimal"
-    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.001, n_iterations=n_iterations)
+    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.05, n_iterations=n_iterations)
     print(theta_final)
 
-    predictions = model(X, theta_final)
+    predictions = model(X, theta_final) #on appelle la fonctrion model pour "fusionner" les deux matrices
     plt.scatter(x, y)
     plt.plot(x, predictions, c='r')
     #plt.plot(range(n_iterations), cost_history) #Graoh de la performance de Gradient Descent
