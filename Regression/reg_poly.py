@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.datasets import make_regression
 import matplotlib.pyplot as plt
 
-np.random.seed(4478)
-n_iterations = 4000 
+np.random.seed(68474)
+n_iterations = 1000
 
 
 theta = np.zeros((3, 1))   #nouvelle shape pour ajouter c
@@ -23,8 +23,8 @@ def main():
     X = np.hstack((x, np.ones((x.shape[0], 1))))
     X = np.hstack((x**2, X))   #On ajoute ici une colonne x^2 a gauche dans la matrice X pour avoir une fonction ax^2 +bx + c
 
-    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.001, n_iterations=n_iterations)
-    print(theta_final)
+    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.01, n_iterations=n_iterations)
+    print(f"La fonction polynomiale de theta final est {theta_final[0, 0]:.2f}x^2 + {theta_final[1, 0]:.2f}x + {theta_final[2, 0]:.2f}")
 
     predictions = model(X, theta_final) 
     plt.scatter(x, y)
