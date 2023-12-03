@@ -27,9 +27,19 @@ def main():
     print(f"La fonction polynomiale de theta final est {theta_final[0, 0]:.2f}x^2 + {theta_final[1, 0]:.2f}x + {theta_final[2, 0]:.2f}")
 
     predictions = model(X, theta_final) 
+    
+    
+    #Premiere figure
+    plt.figure()
     plt.scatter(x, y)
-    plt.plot(x, predictions, c='r')
-    #plt.plot(range(n_iterations), cost_history) #Graoh de la performance de Gradient Descent
+    plt.plot(x, predictions, c='r', label='Fonction theta')
+    plt.title('FIgure 1')
+    
+    #Deuxieme figure
+    plt.figure()
+    plt.plot(range(n_iterations), cost_history) #Graoh de la performance de Gradient Descent
+    plt.title('Figure 2')
+    
     plt.show()
 
 def model(X, theta):

@@ -22,12 +22,21 @@ def main():
 
     # Machine learning, choix des paramètres pour l'algo et obtention d'un theta final (a, b) le plus "optimal"
     theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.05, n_iterations=n_iterations)
-    print(theta_final)
+    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x + {theta_final[1, 0]:.2f}")
 
     predictions = model(X, theta_final) #on appelle la fonctrion model pour "fusionner" les deux matrices
+    
+    #Premiere figure
+    plt.figure()
     plt.scatter(x, y)
-    plt.plot(x, predictions, c='r')
-    #plt.plot(range(n_iterations), cost_history) #Graoh de la performance de Gradient Descent
+    plt.plot(x, predictions, c='r', label='Fonction theta')
+    plt.title('FIgure 1')
+    
+    #Deuxieme figure
+    plt.figure()
+    plt.plot(range(n_iterations), cost_history) #Graoh de la performance de Gradient Descent
+    plt.title('Figure 2')
+    
     plt.show()
 
 # Model
