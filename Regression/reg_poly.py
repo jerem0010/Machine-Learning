@@ -2,8 +2,9 @@ import numpy as np
 from sklearn.datasets import make_regression
 import matplotlib.pyplot as plt
 
-np.random.seed(68474)
-n_iterations = 1000
+np.random.seed(457)
+n_iterations = 10
+learning = 0.25
 
 
 theta = np.zeros((3, 1))   #nouvelle shape pour ajouter c
@@ -23,10 +24,13 @@ def main():
     X = np.hstack((x, np.ones((x.shape[0], 1))))
     X = np.hstack((x**2, X))   #On ajoute ici une colonne x^2 a gauche dans la matrice X pour avoir une fonction ax^2 +bx + c
 
-    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.01, n_iterations=n_iterations)
-    print(f"La fonction polynomiale de theta final est {theta_final[0, 0]:.2f}x^2 + {theta_final[1, 0]:.2f}x + {theta_final[2, 0]:.2f}")
+    # Machine learning, choix des paramètres pour l'algo et obtention d'un theta final (a, b) le plus "optimal"
+    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=learning, n_iterations=n_iterations)
+    predictions = model(X, theta_final) #on appelle la fonctrion model pour "fusionner" les deux matrices
 
-    predictions = model(X, theta_final) 
+    
+    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x + {theta_final[1, 0]:.2f}")
+    print(f"Le coefficient de determination est de {coef_determination(y, predictions)}") 
     
     
     #Premiere figure
@@ -59,6 +63,11 @@ def gradient_descent(X, y, theta, learning_rate, n_iterations):
         theta = theta - learning_rate * grad(X, y, theta)
         cost_history[i] = cost_function(X, y, theta) 
     return theta, cost_history
+
+def coef_determination(y, pred):
+    u = ((y - pred)**2).sum()
+    v = ((y - y.mean())**2).sum()
+    return 1 - u/v
 
 if __name__ == '__main__':
     main()

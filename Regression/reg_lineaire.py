@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 # Définis une graine (seed) pour la reproductibilité
 np.random.seed(5336)
 
-n_iterations = 300 #on choisis le nombre d'iteration ici 
+n_iterations = 10 #on choisis le nombre d'iteration ici 
+learning = 0.5
 
 
 
@@ -21,10 +22,12 @@ def main():
     
 
     # Machine learning, choix des paramètres pour l'algo et obtention d'un theta final (a, b) le plus "optimal"
-    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=0.05, n_iterations=n_iterations)
-    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x + {theta_final[1, 0]:.2f}")
+    theta_final, cost_history = gradient_descent(X, y, theta, learning_rate=learning, n_iterations=n_iterations)
+    
 
     predictions = model(X, theta_final) #on appelle la fonctrion model pour "fusionner" les deux matrices
+    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x + {theta_final[1, 0]:.2f}")
+    print(f"Le coefficient de determination est de {coef_determination(y, predictions)}")
     
     #Premiere figure
     plt.figure()
@@ -38,6 +41,8 @@ def main():
     plt.title('Figure 2')
     
     plt.show()
+    
+    
 
 # Model
 def model(X, theta):
@@ -58,6 +63,11 @@ def gradient_descent(X, y, theta, learning_rate, n_iterations):
         theta = theta - learning_rate * grad(X, y, theta)
         cost_history[i] = cost_function(X, y, theta) #Cela permet d'avoir un historique des couts pour savoir si lalgo a fait trop ou pas assez diterations
     return theta, cost_history
+
+def coef_determination(y, pred):
+    u = ((y - pred)**2).sum()
+    v = ((y - y.mean())**2).sum()
+    return 1 - u/v
 
 if __name__ == '__main__':
     main()
