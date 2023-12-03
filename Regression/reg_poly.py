@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.datasets import make_regression
 import matplotlib.pyplot as plt
 
-np.random.seed(457)
+np.random.seed(477)
 n_iterations = 10
 learning = 0.25
 
@@ -18,7 +18,7 @@ pour une fonction polynomiale de degré 2 nous avons besoin d'une troisieme vari
 def main():
     x, y = make_regression(n_samples=100, n_features=1, noise=10)
     
-    y = y + abs(y/2) #pour un peu "casser" la courbe pour avoir une allure moins lineaire pour notre dataset
+    #y = y + abs(y/2) #pour un peu "casser" la courbe pour avoir une allure moins lineaire pour notre dataset
     
     y = y.reshape(100, 1)  
     X = np.hstack((x, np.ones((x.shape[0], 1))))
@@ -29,7 +29,7 @@ def main():
     predictions = model(X, theta_final) #on appelle la fonctrion model pour "fusionner" les deux matrices
 
     
-    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x + {theta_final[1, 0]:.2f}")
+    print(f"La fonction polynomiale de theta final est  {theta_final[0, 0]:.2f}x^2 + {theta_final[1, 0]:.2f}x + {theta_final[2, 0]:.2f}")
     print(f"Le coefficient de determination est de {coef_determination(y, predictions)}") 
     
     
